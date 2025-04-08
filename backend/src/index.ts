@@ -48,7 +48,7 @@ app.post("/suggestions", async (req: Request, res: Response): Promise<void> => {
 });
 
 app.get("/", (req, res) => {
-  res.send("backend running");
+  res.send("Welcome! Tell me what topic you would like to have ideas about? ");
 });
 
 app.listen(PORT, () => {
