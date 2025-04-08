@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
+import { isNumberedLine, formatToStrong } from "./utils/utils";
+import "./App.css";
+
 import Button from "./components/Button/Button";
 import Card from "./components/Card/Card";
-import "./App.css";
 
 
 function App() {
@@ -58,24 +60,13 @@ function App() {
 
   const formatSuggestions = (text: string) => {
     const lines = text.split("\n").filter((line) => line.trim().length > 0);
+
     return (
       <ol>
         {lines.map((line, index) => {
-          const isNumberedLine = /^[0-9]+\./.test(line.trim());
-          if (isNumberedLine) {
-            const formattedLine = line
-                                  .replace(/^[0-9]+\.\s*/, "")
-                                  .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>");
-            return (
-              <li key={index} dangerouslySetInnerHTML={{ __html: formattedLine }} />
-            );
-          } else {
-            return (
-              <p key={index}>
-                {line}
-              </p>
-            );
-          }
+          return isNumberedLine(line)
+            ? <li key={index} dangerouslySetInnerHTML={{ __html: formatToStrong(line) }} />
+            : <p key={index}>{line}</p>;
         })}
       </ol>
     );
