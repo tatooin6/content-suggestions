@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+
 import Button from "./components/Button/Button";
+import Card from "./components/Card/Card";
 import "./App.css";
 
+
 function App() {
-  const [message, setMessage] = useState("local message");
+  const [message, setMessage] = useState<React.ReactNode>("");
   const [isBackendWorking, setIsBackendWorking] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,7 +39,8 @@ function App() {
         .then((res) => res.json())
         .then((data) => {
           if (data.suggestions) {
-            setMessage(data.suggestions);
+            const formattedSuggestions = formatSuggestions(data.suggestions);
+            setMessage(formattedSuggestions);
           } else {
             setMessage(data.error || "Something went wrong");
           }
@@ -48,8 +52,33 @@ function App() {
           setLoading(false);
         });
     } else {
-      setMessage("A prompt is required.");
+      setMessage("A prompt is required. Please enter any topic below.");
     }
+  };
+
+  const formatSuggestions = (text: string) => {
+    const lines = text.split("\n").filter((line) => line.trim().length > 0);
+    return (
+      <ol>
+        {lines.map((line, index) => {
+          const isNumberedLine = /^[0-9]+\./.test(line.trim());
+          if (isNumberedLine) {
+            const formattedLine = line
+                                  .replace(/^[0-9]+\.\s*/, "")
+                                  .replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>");
+            return (
+              <li key={index} dangerouslySetInnerHTML={{ __html: formattedLine }} />
+            );
+          } else {
+            return (
+              <p key={index}>
+                {line}
+              </p>
+            );
+          }
+        })}
+      </ol>
+    );
   };
 
   return (
@@ -68,9 +97,7 @@ function App() {
 
       <div className="body">
         <div className="row">
-          <div className="card">
-            <p className="card-text">{message}</p>
-          </div>
+          <Card message={message} />
         </div>
 
         <div className="row">
@@ -83,8 +110,8 @@ function App() {
           />
           <Button 
             action={handleGenerateSuggestions} 
-            label="Generate"
-            isDisabled={loading || !isBackendWorking}
+            label={loading ? "Generating" : "Generate"}
+            isDisabled={loading || !isBackendWorking || prompt === ""}
           />
         </div>
       </div>
