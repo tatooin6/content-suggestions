@@ -1,0 +1,37 @@
+.card {
+    width: 100%;
+    height: calc(100vh - 200px);
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #2c2c2c;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    text-align: left;
+  }
+  
+  .card-text {
+    padding-right: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .card::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .card::-webkit-scrollbar-thumb {
+    background-color: #646cffaa;
+    border-radius: 10px;
+    border: 2px solid #333;
+  }
+  
+  .card::-webkit-scrollbar-track {
+    background-color: #444;
+    border-radius: 10px;
+  }
