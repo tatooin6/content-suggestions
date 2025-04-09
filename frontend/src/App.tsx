@@ -74,8 +74,33 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <h1 className="title">JourBuddy</h1>
+      <header className="column-container">
+        <div className="logo">
+          <img src="jb.svg" alt="logo" />
+          <h1 className="title">JourBuddy</h1>
+        </div>
+        <div className="content">
+            <div className="body">
+            <div className="row">
+              <Card message={message} />
+            </div>
+
+            <div className="row">
+              <input
+                className="input-element"
+                type="text"
+                placeholder="Enter a topic"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+              />
+              <Button 
+                action={handleGenerateSuggestions} 
+                label={loading ? "Generating" : "Generate"}
+                isDisabled={loading || !isBackendWorking || prompt === ""}
+              />
+            </div>
+          </div>
+        </div>
         <div className="status-icon">
           {isBackendWorking ? (
             <FaCheckCircle className="status-icon-working" />
@@ -86,26 +111,7 @@ function App() {
       </header>
 
 
-      <div className="body">
-        <div className="row">
-          <Card message={message} />
-        </div>
-
-        <div className="row">
-          <input
-            className="input-element"
-            type="text"
-            placeholder="Enter a topic"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          />
-          <Button 
-            action={handleGenerateSuggestions} 
-            label={loading ? "Generating" : "Generate"}
-            isDisabled={loading || !isBackendWorking || prompt === ""}
-          />
-        </div>
-      </div>
+      
     </div>
   );
 }

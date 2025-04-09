@@ -1,29 +1,28 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
+  width: 100%;
   text-align: center;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
 .app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 20px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.column-container {
+  display: grid;
+  grid-template-columns: 1fr 3.5fr 0.5fr;
+  align-items: flex-start;
   width: 100%;
   margin-bottom: 20px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
 .title {
@@ -35,6 +34,7 @@
 .status-icon {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   font-size: 1.5rem;
 }
 
