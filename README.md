@@ -2,6 +2,8 @@
 
 This project is composed of a backend and frontend developed using TypeScript, Express, and React. The backend integrates with Google Gemini (GenAI) API for content suggestions, and the frontend allows users to interact with the backend to generate content ideas based on a prompt.
 
+![Project Screenshot](frontend/public/screenshot.png)
+
 ## Project Structure
 #### Backend:
 -	The backend uses Express and TypeScript to provide an API endpoint for generating content suggestions.
@@ -10,6 +12,29 @@ This project is composed of a backend and frontend developed using TypeScript, E
 #### Frontend:
 -	The frontend is built with React and TypeScript using Vite as the build tool.
 -	It communicates with the backend to send prompts and receive content suggestions.
+
+## Directory Structure
+
+```
+content-suggestions/
+├── backend/
+│   ├── src/                    
+│   ├── dist/ (generated after build)
+│   ├── .env                    
+│   ├── package.json            
+│   ├── tsconfig.json           
+│   └── Dockerfile              
+├── frontend/
+│   ├── src/  
+│   ├── dist/  (generated after build)                 
+│   ├── .env    
+│   ├── package.json            
+│   ├── tsconfig.json           
+│   └── Dockerfile              
+├── docker-compose.yml          
+├── README.md                   
+└── .gitignore                  
+```
 
 ## Prerequisites
 
@@ -164,29 +189,6 @@ This will generate the production-ready files for the frontend in the dist folde
 
 ---
 
-## Directory Structure
-
-```
-content-suggestions/
-├── backend/
-│   ├── src/                    
-│   ├── dist/ (generated after build)
-│   ├── .env                    
-│   ├── package.json            
-│   ├── tsconfig.json           
-│   └── Dockerfile              
-├── frontend/
-│   ├── src/  
-│   ├── dist/  (generated after build)                 
-│   ├── .env    
-│   ├── package.json            
-│   ├── tsconfig.json           
-│   └── Dockerfile              
-├── docker-compose.yml          
-├── README.md                   
-└── .gitignore                  
-```
-
 ## Docker Compose Overview
 -	backend: The backend service is built using the Dockerfile in the backend folder. It exposes port `4000` and connects to the app-network.
 -	frontend: The frontend service is built using the Dockerfile in the frontend folder. It exposes port `5173` and depends on the backend service.
@@ -203,3 +205,36 @@ content-suggestions/
 - Uncut Gems is a must watch movie.
 
 - What other warnings as The Last Of Us can we find on internet?
+## Pending Features
+
+These are the features that are still to be implemented:
+
+- **Button to clear everything**: Add a button that will clear all the data and inputs in the application.
+- **Enable Enter key to submit the prompt**: Add functionality to allow the user to submit the prompt by pressing the **Enter/Return** key.
+- **Linter and code formatting**: Set up and configure a linter and automatic code formatting tools to maintain code quality.
+- **Modularize components**: Refactor the components to make them more modular and reusable.
+- **Add a history section**: Create a right panel in order to keep a suggestions history list. 
+
+## License
+
+MIT License
+
+Copyright (c) 2025 [Tato](https://tato-portfolio.vercel.app/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
