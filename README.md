@@ -176,8 +176,9 @@ content-suggestions/
 │   ├── tsconfig.json           
 │   └── Dockerfile              
 ├── frontend/
-│   ├── src/  (generated after build)
-│   ├── dist/                   
+│   ├── src/  
+│   ├── dist/  (generated after build)                 
+│   ├── .env    
 │   ├── package.json            
 │   ├── tsconfig.json           
 │   └── Dockerfile              
@@ -187,9 +188,18 @@ content-suggestions/
 ```
 
 ## Docker Compose Overview
--	backend: The backend service is built using the Dockerfile in the backend folder. It exposes port 4000 and connects to the app-network.
--	frontend: The frontend service is built using the Dockerfile in the frontend folder. It exposes port 5173 and depends on the backend service.
+-	backend: The backend service is built using the Dockerfile in the backend folder. It exposes port `4000` and connects to the app-network.
+-	frontend: The frontend service is built using the Dockerfile in the frontend folder. It exposes port `5173` and depends on the backend service.
 
 ##### Notes
 -	Make sure to replace your_google_gemini_api_key_here with your actual API key in the .env file for the backend to authenticate with the Google Gemini API.
 
+##### Funny Prompt Examples
+
+- Healthy eating and mental exercise at work.
+
+- Stand-up comedians are the most logical.
+
+- Uncut Gems is a must watch movie.
+
+- What other warnings as The Last Of Us can we find on internet?
