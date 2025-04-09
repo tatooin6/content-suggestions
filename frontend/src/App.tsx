@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 import { isNumberedLine, formatToStrong } from "./utils/utils";
+import { checkBackendConnection, generateSuggestions } from "./services/api";
 import "./App.css";
 
 import Button from "./components/Button/Button";
@@ -15,9 +16,8 @@ function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:4000")
-      .then((res: any) => res.text())
-      .then((data: any) => {
+    checkBackendConnection()
+      .then((data) => {
         setMessage(data);
         setIsBackendWorking(true);
       })
@@ -27,32 +27,21 @@ function App() {
       });
   }, []);
 
-  const handleGenerateSuggestions = () => {
+  const handleGenerateSuggestions = async () => {
     if (prompt.trim()) {
       setLoading(true);
-
-      fetch("http://localhost:4000/suggestions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ prompt: prompt }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.suggestions) {
-            const formattedSuggestions = formatSuggestions(data.suggestions);
-            setMessage(formattedSuggestions);
-          } else {
-            setMessage(data.error || "Something went wrong");
-          }
-        })
-        .catch(() => {
-          setMessage("Error: Unable to connect to backend");
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+      try {
+        const suggestions = await generateSuggestions(prompt);
+        const formattedSuggestions = formatSuggestions(suggestions);
+        setMessage(formattedSuggestions);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          throw new Error(error.message || "Error: Unable to generate suggestions from backend.");
+        }
+        setMessage("An unknown error occurred.");
+      } finally {
+        setLoading(false);
+      }
     } else {
       setMessage("A prompt is required. Please enter any topic below.");
     }
@@ -74,8 +63,33 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="header">
-        <h1 className="title">JourBuddy</h1>
+      <header className="column-container">
+        <div className="logo">
+          <img src="jb.svg" alt="logo" />
+          <h1 className="title">JourBuddy</h1>
+        </div>
+        <div className="content">
+          <div className="body">
+            <div className="row">
+              <Card message={message} />
+            </div>
+
+            <div className="row">
+              <input
+                className="input-element"
+                type="text"
+                placeholder="Enter a topic"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+              />
+              <Button
+                action={handleGenerateSuggestions}
+                label={loading ? "Generating" : "Generate"}
+                isDisabled={loading || !isBackendWorking || prompt === ""}
+              />
+            </div>
+          </div>
+        </div>
         <div className="status-icon">
           {isBackendWorking ? (
             <FaCheckCircle className="status-icon-working" />
@@ -84,28 +98,6 @@ function App() {
           )}
         </div>
       </header>
-
-
-      <div className="body">
-        <div className="row">
-          <Card message={message} />
-        </div>
-
-        <div className="row">
-          <input
-            className="input-element"
-            type="text"
-            placeholder="Enter a topic"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          />
-          <Button 
-            action={handleGenerateSuggestions} 
-            label={loading ? "Generating" : "Generate"}
-            isDisabled={loading || !isBackendWorking || prompt === ""}
-          />
-        </div>
-      </div>
     </div>
   );
 }

@@ -2,6 +2,8 @@
 
 This project is composed of a backend and frontend developed using TypeScript, Express, and React. The backend integrates with Google Gemini (GenAI) API for content suggestions, and the frontend allows users to interact with the backend to generate content ideas based on a prompt.
 
+![Project Screenshot](frontend/public/screenshot.png)
+
 ## Project Structure
 #### Backend:
 -	The backend uses Express and TypeScript to provide an API endpoint for generating content suggestions.
@@ -10,6 +12,29 @@ This project is composed of a backend and frontend developed using TypeScript, E
 #### Frontend:
 -	The frontend is built with React and TypeScript using Vite as the build tool.
 -	It communicates with the backend to send prompts and receive content suggestions.
+
+## Directory Structure
+
+```
+content-suggestions/
+├── backend/
+│   ├── src/                    
+│   ├── dist/ (generated after build)
+│   ├── .env                    
+│   ├── package.json            
+│   ├── tsconfig.json           
+│   └── Dockerfile              
+├── frontend/
+│   ├── src/  
+│   ├── dist/  (generated after build)                 
+│   ├── .env    
+│   ├── package.json            
+│   ├── tsconfig.json           
+│   └── Dockerfile              
+├── docker-compose.yml          
+├── README.md                   
+└── .gitignore                  
+```
 
 ## Prerequisites
 
@@ -23,18 +48,23 @@ Make sure you have the following installed on your local machine:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/project-name.git
-cd project-name
+git clone https://github.com/your-username/project-name.git content-suggestions
+cd content-suggestions
 ```
-⸻
+---
 
 #### Step 2: Set Up Environment Variables
 
+These files will hold the environment variables on each project.
 In the backend directory, create a .env file and add your Google Gemini API key:
 
 `GEMINI_API_KEY=your_google_gemini_api_key_here`
 
-⸻
+In the frontend directory, you also must create an .env file and add the backend URL.
+
+`VITE_BACKEND_URL=http://localhost:4000`
+
+---
 
 #### Step 3: Install Dependencies
 
@@ -61,7 +91,7 @@ In the backend directory, create a .env file and add your Google Gemini API key:
 `npm install`
 
 
-⸻
+---
 
 #### Step 4: Docker Setup
 
@@ -75,7 +105,7 @@ To run the project with Docker and Docker Compose, follow these steps:
 
 This command will build the Docker images and start both the frontend and backend services.
 
-⸻
+---
 
 #### Step 5: Local Development (Optional)
 
@@ -109,7 +139,7 @@ This will start the backend server on `http://localhost:4000.`
 
 This will start the frontend server on `http://localhost:5173.`
 
-⸻
+---
 
 #### Step 6: Test the API
 
@@ -130,7 +160,7 @@ After starting the servers, you can test the backend API using Postman or Insomn
 }
 ```
 
-⸻
+---
 
 #### Step 7: Build for Production
 
@@ -157,33 +187,54 @@ If you want to build the project for production:
 
 This will generate the production-ready files for the frontend in the dist folder.
 
-⸻
-
-## Directory Structure
-
-```
-content-suggestions/
-├── backend/
-│   ├── src/
-│   ├── dist/ (generated after build)
-│   ├── .env
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── Dockerfile
-├── frontend/
-│   ├── src/
-│   ├── dist/ (generated after build)
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── Dockerfile
-├── docker-compose.yml
-└── README.md
-```
+---
 
 ## Docker Compose Overview
--	backend: The backend service is built using the Dockerfile in the backend folder. It exposes port 4000 and connects to the app-network.
--	frontend: The frontend service is built using the Dockerfile in the frontend folder. It exposes port 5173 and depends on the backend service.
+-	backend: The backend service is built using the Dockerfile in the backend folder. It exposes port `4000` and connects to the app-network.
+-	frontend: The frontend service is built using the Dockerfile in the frontend folder. It exposes port `5173` and depends on the backend service.
 
 ##### Notes
 -	Make sure to replace your_google_gemini_api_key_here with your actual API key in the .env file for the backend to authenticate with the Google Gemini API.
 
+##### Funny Prompt Examples
+
+- Healthy eating and mental exercise at work.
+
+- Stand-up comedians are the most logical.
+
+- Uncut Gems is a must watch movie.
+
+- What other warnings as The Last Of Us can we find on internet?
+## Pending Features
+
+These are the features that are still to be implemented:
+
+- **Button to clear everything**: Add a button that will clear all the data and inputs in the application.
+- **Enable Enter key to submit the prompt**: Add functionality to allow the user to submit the prompt by pressing the **Enter/Return** key.
+- **Linter and code formatting**: Set up and configure a linter and automatic code formatting tools to maintain code quality.
+- **Modularize components**: Refactor the components to make them more modular and reusable.
+- **Add a history section**: Create a right panel in order to keep a suggestions history list. 
+
+## License
+
+MIT License
+
+Copyright (c) 2025 [Tato](https://tato-portfolio.vercel.app/)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
