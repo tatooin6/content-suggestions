@@ -23,18 +23,23 @@ Make sure you have the following installed on your local machine:
 Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/project-name.git
-cd project-name
+git clone https://github.com/your-username/project-name.git content-suggestions
+cd content-suggestions
 ```
-⸻
+---
 
 #### Step 2: Set Up Environment Variables
 
+These files will hold the environment variables on each project.
 In the backend directory, create a .env file and add your Google Gemini API key:
 
 `GEMINI_API_KEY=your_google_gemini_api_key_here`
 
-⸻
+In the frontend directory, you also must create an .env file and add the backend URL.
+
+`VITE_BACKEND_URL=http://localhost:4000`
+
+---
 
 #### Step 3: Install Dependencies
 
@@ -61,7 +66,7 @@ In the backend directory, create a .env file and add your Google Gemini API key:
 `npm install`
 
 
-⸻
+---
 
 #### Step 4: Docker Setup
 
@@ -75,7 +80,7 @@ To run the project with Docker and Docker Compose, follow these steps:
 
 This command will build the Docker images and start both the frontend and backend services.
 
-⸻
+---
 
 #### Step 5: Local Development (Optional)
 
@@ -109,7 +114,7 @@ This will start the backend server on `http://localhost:4000.`
 
 This will start the frontend server on `http://localhost:5173.`
 
-⸻
+---
 
 #### Step 6: Test the API
 
@@ -130,7 +135,7 @@ After starting the servers, you can test the backend API using Postman or Insomn
 }
 ```
 
-⸻
+---
 
 #### Step 7: Build for Production
 
@@ -157,27 +162,28 @@ If you want to build the project for production:
 
 This will generate the production-ready files for the frontend in the dist folder.
 
-⸻
+---
 
 ## Directory Structure
 
 ```
 content-suggestions/
 ├── backend/
-│   ├── src/
+│   ├── src/                    
 │   ├── dist/ (generated after build)
-│   ├── .env
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── Dockerfile
+│   ├── .env                    
+│   ├── package.json            
+│   ├── tsconfig.json           
+│   └── Dockerfile              
 ├── frontend/
-│   ├── src/
-│   ├── dist/ (generated after build)
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── Dockerfile
-├── docker-compose.yml
-└── README.md
+│   ├── src/  (generated after build)
+│   ├── dist/                   
+│   ├── package.json            
+│   ├── tsconfig.json           
+│   └── Dockerfile              
+├── docker-compose.yml          
+├── README.md                   
+└── .gitignore                  
 ```
 
 ## Docker Compose Overview
