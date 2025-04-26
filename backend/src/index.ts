@@ -45,7 +45,9 @@ async function handleSuggestions(req: Request, res: Response): Promise<void> {
 /**
  * Generates content suggestions using the Google Gemini AI model (for now).
  */
-async function getContentSuggestions(prompt: string): Promise<string> {
+async function getContentSuggestions(
+  prompt: string,
+): Promise<suggestionFormatted> {
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
@@ -55,17 +57,47 @@ async function getContentSuggestions(prompt: string): Promise<string> {
         Each idea should be a single line with a short explanation in parentheses about why it could work well.`,
     });
 
-    return response.text || "No suggestions generated.";
+    return formatSuggestions(response.text || "No suggestions generated.");
   } catch (err) {
     throw new Error("Error fetching content suggestions from the AI model");
   }
 }
 
+interface suggestionFormatted {
+  title: string;
+  ideas: { strongText: string; descriptionText: string }[];
+}
+
+/**
+ * Format Suggestions into an ordered list.
+ */
+function formatSuggestions(text: string): suggestionFormatted {
+  const byFullLine = (line: string) => line.trim().length > 0;
+  const lines = text.split("\n").filter(byFullLine);
+  let title = "";
+  const ideas = [];
+
+  lines.forEach((line) => {
+    const isANumberedLine = (line: string) => /^[0-9]+\./.test(line.trim());
+    if (!isANumberedLine(line)) {
+      title += line.trim() + " ";
+    } else {
+      const cleanLine = line.replace(/^[0-9]+\.\s*/, "");
+      const [strongText, normalText] = cleanLine.split("(");
+      ideas.push({
+        strongText: strongText.replace(/\*\*/g, "").replace(/\\"/g, "").trim(),
+        normalText: (normalText || "").replace(")", "").trim(),
+      });
+    }
+  });
+
+  return { title: title.trim(), ideas };
+}
+
 /**
  * It receives a request from the frontend to verify that the server is running.
- * It responds with a placeholder for the user. This shouldn't work this way 
- * since the end user would be seeing a direct response from the server...but 
- * this is a PoC, so that's why this liberty is taken this way.
+ * It responds with a placeholder for the user. This shouldn't work this way
+ * since the end user would be seeing a direct response from the server.
  */
 function handleRoot(req: Request, res: Response): void {
   res.send("Welcome! Tell me what topic you would like to have ideas about?");
@@ -74,7 +106,11 @@ function handleRoot(req: Request, res: Response): void {
 /**
  * Sends a standardized error response.
  */
-function sendErrorResponse(res: Response, statusCode: number, message: string): void {
+function sendErrorResponse(
+  res: Response,
+  statusCode: number,
+  message: string,
+): void {
   res.status(statusCode).json({ error: message });
 }
 

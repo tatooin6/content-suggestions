@@ -8,7 +8,6 @@ import "./App.css";
 import Button from "./components/Button/Button";
 import Card from "./components/Card/Card";
 
-
 function App() {
   const [message, setMessage] = useState<React.ReactNode>("");
   const [isBackendWorking, setIsBackendWorking] = useState(false);
@@ -32,11 +31,32 @@ function App() {
       setLoading(true);
       try {
         const suggestions = await generateSuggestions(prompt);
-        const formattedSuggestions = formatSuggestions(suggestions);
+        const { title, ideas } = suggestions;
+        const formattedSuggestions = (
+          <div>
+            <h4>{title}</h4>
+            <ol>
+              {ideas.map(
+                (
+                  idea: { strongText: string; normalText: string },
+                  index: number,
+                ) => (
+                  <li key={index}>
+                    <strong>{idea.strongText}:</strong>
+                    {idea.normalText}
+                  </li>
+                ),
+              )}
+            </ol>
+          </div>
+        );
         setMessage(formattedSuggestions);
       } catch (error: unknown) {
         if (error instanceof Error) {
-          throw new Error(error.message || "Error: Unable to generate suggestions from backend.");
+          throw new Error(
+            error.message ||
+              "Error: Unable to generate suggestions from backend.",
+          );
         }
         setMessage("An unknown error occurred.");
       } finally {
@@ -45,20 +65,6 @@ function App() {
     } else {
       setMessage("A prompt is required. Please enter any topic below.");
     }
-  };
-
-  const formatSuggestions = (text: string) => {
-    const lines = text.split("\n").filter((line) => line.trim().length > 0);
-
-    return (
-      <ol>
-        {lines.map((line, index) => {
-          return isNumberedLine(line)
-            ? <li key={index} dangerouslySetInnerHTML={{ __html: formatToStrong(line) }} />
-            : <p key={index}>{line}</p>;
-        })}
-      </ol>
-    );
   };
 
   return (
