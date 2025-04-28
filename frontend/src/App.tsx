@@ -6,7 +6,7 @@ import "./App.css";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import PromptForm from "./components/PromptForm";
+import PromptForm from "./components/PromptForm/PromptForm";
 
 function App() {
   const [message, setMessage] = useState<React.ReactNode>("");
