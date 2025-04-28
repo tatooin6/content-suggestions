@@ -1,12 +1,13 @@
+import React from "react";
 import { useState, useEffect } from "react";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
-import { isNumberedLine, formatToStrong } from "./utils/utils";
 import { checkBackendConnection, generateSuggestions } from "./services/api";
 import "./App.css";
 
 import Button from "./components/Button/Button";
 import Card from "./components/Card/Card";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [message, setMessage] = useState<React.ReactNode>("");
@@ -69,41 +70,30 @@ function App() {
 
   return (
     <div className="app-container">
-      <header className="column-container">
-        <div className="logo">
-          <img src="jb.svg" alt="logo" />
-          <h1 className="title">JourBuddy</h1>
-        </div>
-        <div className="content">
-          <div className="body">
-            <div className="row">
-              <Card message={message} />
-            </div>
+      <Header isBackendWorking={isBackendWorking} />
+      <div className="content">
+        <div className="body">
+          <div className="row">
+            <Card message={message} />
+          </div>
 
-            <div className="row">
-              <input
-                className="input-element"
-                type="text"
-                placeholder="Enter a topic"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-              />
-              <Button
-                action={handleGenerateSuggestions}
-                label={loading ? "Generating" : "Generate"}
-                isDisabled={loading || !isBackendWorking || prompt === ""}
-              />
-            </div>
+          <div className="row">
+            <input
+              className="input-element"
+              type="text"
+              placeholder="Enter a topic"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            />
+            <Button
+              action={handleGenerateSuggestions}
+              label={loading ? "Generating" : "Generate"}
+              isDisabled={loading || !isBackendWorking || prompt === ""}
+            />
           </div>
         </div>
-        <div className="status-icon">
-          {isBackendWorking ? (
-            <FaCheckCircle className="status-icon-working" />
-          ) : (
-            <FaTimesCircle className="status-icon-error" />
-          )}
-        </div>
-      </header>
+      </div>
+      <Footer />
     </div>
   );
 }

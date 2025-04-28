@@ -5,8 +5,20 @@
 }
 
 .app-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 20px;
+  justify-content: space-between;
+  padding: 1em 1em;
+  min-height: 100vh;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
 }
 
 .column-container {
@@ -17,44 +29,8 @@
   margin-bottom: 20px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  margin-right: 20px;
-}
-
-.title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #646cffaa;
-}
-
-.status-icon {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 1.5rem;
-}
-
-.status-icon-working {
-  color: green;
-}
-
-.status-icon-error {
-  color: red;
-}
-
-.status-text {
-  margin-left: 10px;
-  font-size: 1rem;
-  color: #ddd;
-}
-
 .body {
   width: 100%;
-  max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 20px;

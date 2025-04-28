@@ -1,5 +1,6 @@
+import React from "react";
 import { IconType } from "react-icons";
-import "./Button.css"
+import "./Button.css";
 
 interface ButtonProps {
   action: () => void;
@@ -14,9 +15,7 @@ const Button = ({
   isDisabled = false,
   icon: IconComponent,
 }: ButtonProps) => {
-  const buttonStyles = isDisabled
-    ? "button-disabled"
-    : "button-primary";
+  const buttonStyles = isDisabled ? "button-disabled" : "button-primary";
 
   return (
     <button
